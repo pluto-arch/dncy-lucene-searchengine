@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net451;net452;net46;net461;net462;netcoreapp3.1;net50;net60</TargetFrameworks>
+		<LangVersion>latest</LangVersion>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Description>Lucene.Net 分词工具</Description>
+		<Company>dotnetydd</Company>
+		<Authors>dotnetydd</Authors>
+		<version>1.0.0-pre</version>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="stopwords.txt" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="stopwords.txt">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Lucene.Net" Version="4.8.0-beta00016" />
+		<PackageReference Include="Lucene.Net.Analysis.SmartCn" Version="4.8.0-beta00016" />
+		<PackageReference Include="Lucene.Net.Highlighter" Version="4.8.0-beta00016" />
+		<PackageReference Include="Lucene.Net.Queries" Version="4.8.0-beta00016" />
+		<PackageReference Include="Lucene.Net.QueryParser" Version="4.8.0-beta00016" />
+	</ItemGroup>
+
+</Project>
