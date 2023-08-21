@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net451;net452;net46;net461;net462;netcoreapp3.1;net50;net60</TargetFrameworks>
+		<TargetFrameworks>net451;net452;net46;net461;net462;netcoreapp3.1;net50;net60;net70</TargetFrameworks>
 		<LangVersion>latest</LangVersion>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Description>Lucene.Net 分词工具</Description>
