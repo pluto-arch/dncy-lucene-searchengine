@@ -1,10 +1,10 @@
 ﻿using System;
 using Lucene.Net.Documents;
 
-namespace Dncy.Tools.LuceneNet
+namespace Dotnetydd.Tools.LuceneNet
 {
     [AttributeUsage(AttributeTargets.Property)]
-    public class LuceneIndexedAttribute:Attribute
+    public class LuceneIndexedAttribute : Attribute
     {
 
         /// <summary>
@@ -13,7 +13,7 @@ namespace Dncy.Tools.LuceneNet
         /// <param name="name">名称</param>
         /// <param name="isIdentityField">是否为标识字段</param>
         /// <param name="serialize">复杂对象是否进行序列化存储</param>
-        public LuceneIndexedAttribute(string name, bool isIdentityField, bool serialize=false)
+        public LuceneIndexedAttribute(string name, bool isIdentityField, bool serialize = false)
         {
             Name = name;
             Store = Field.Store.YES;

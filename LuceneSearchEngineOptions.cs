@@ -1,6 +1,6 @@
 ﻿using Lucene.Net.Analysis;
 
-namespace Dncy.Tools.LuceneNet
+namespace Dotnetydd.Tools.LuceneNet
 {
     public class LuceneSearchEngineOptions
     {

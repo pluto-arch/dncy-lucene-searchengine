@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-
 using Lucene.Net.Search;
 
-namespace Dncy.Tools.LuceneNet
+namespace Dotnetydd.Tools.LuceneNet.Models
 {
     public class SearchModel
     {
@@ -17,7 +16,7 @@ namespace Dncy.Tools.LuceneNet
         /// </summary>
         /// <param name="query"></param>
         /// <param name="maxHits"></param>
-        public SearchModel(Query query, int maxHits):this()
+        public SearchModel(Query query, int maxHits) : this()
         {
             Query = query;
             MaxHits = maxHits;
@@ -30,7 +29,7 @@ namespace Dncy.Tools.LuceneNet
         /// <param name="query"></param>
         /// <param name="maxHits"></param>
         /// <param name="orderBy"></param>
-        public SearchModel(Query query, int maxHits, List<SortField> orderBy):this()
+        public SearchModel(Query query, int maxHits, List<SortField> orderBy) : this()
         {
             Query = query;
             MaxHits = maxHits;
@@ -46,7 +45,7 @@ namespace Dncy.Tools.LuceneNet
         /// <param name="orderBy"></param>
         /// <param name="skip"></param>
         /// <param name="take"></param>
-        public SearchModel(Query query, int maxHits, List<SortField> orderBy, int skip, int take):this()
+        public SearchModel(Query query, int maxHits, List<SortField> orderBy, int skip, int take) : this()
         {
             Query = query;
             MaxHits = maxHits;
@@ -66,7 +65,7 @@ namespace Dncy.Tools.LuceneNet
         /// <param name="skip"></param>
         /// <param name="take"></param>
         /// <param name="score"></param>
-        public SearchModel(Query query, int maxHits, List<SortField> orderBy, int skip, int take, float score):this()
+        public SearchModel(Query query, int maxHits, List<SortField> orderBy, int skip, int take, float score) : this()
         {
             Query = query;
             MaxHits = maxHits;
@@ -87,7 +86,7 @@ namespace Dncy.Tools.LuceneNet
         /// <param name="take"></param>
         /// <param name="score"></param>
         /// <param name="onlyTyped"></param>
-        public SearchModel(Query query, int maxHits, List<SortField> orderBy, int skip, int take, float score, bool onlyTyped):this()
+        public SearchModel(Query query, int maxHits, List<SortField> orderBy, int skip, int take, float score, bool onlyTyped) : this()
         {
             Query = query;
             MaxHits = maxHits;
@@ -139,7 +138,7 @@ namespace Dncy.Tools.LuceneNet
         /// 高亮标签
         /// </summary>
         /// <example>("<b style='color:red'>","</b>")</example>
-        public (string preTag,string postTag) HighlightTag { get; set; }
+        public (string preTag, string postTag) HighlightTag { get; set; }
 
         /// <summary>
         /// 是否启用高亮 默认true

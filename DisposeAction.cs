@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Dncy.Tools.LuceneNet
+namespace Dotnetydd.Tools.LuceneNet
 {
     internal class DisposeAction : IDisposable
     {

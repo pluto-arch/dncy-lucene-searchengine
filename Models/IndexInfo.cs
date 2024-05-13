@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Dncy.Tools.LuceneNet.Models
+namespace Dotnetydd.Tools.LuceneNet.Models
 {
     public class IndexInfo
     {

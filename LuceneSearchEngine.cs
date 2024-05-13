@@ -6,8 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
-using Dncy.Tools.LuceneNet.Models;
-
+using Dotnetydd.Tools.LuceneNet.Models;
 using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Cn.Smart;
 using Lucene.Net.Analysis.Util;
@@ -25,18 +24,17 @@ using Microsoft.Extensions.Options;
 
 using Directory = System.IO.Directory;
 
-namespace Dncy.Tools.LuceneNet
+namespace Dotnetydd.Tools.LuceneNet
 {
-    public class LuceneSearchEngine:IDisposable
+    public class LuceneSearchEngine : IDisposable
     {
 
         private readonly LuceneSearchEngineOptions _options;
         private readonly IFieldSerializeProvider _fieldSerializeProvider;
-        public const LuceneVersion LuceneVersion = Lucene.Net.Util.LuceneVersion.LUCENE_48;
+        public  static LuceneVersion LuceneVersion = LuceneVersion.LUCENE_48;
         public Analyzer Analyzer { get; private set; }
         public FSDirectory IndexDirectory { get; private set; }
 
-#if NETCOREAPP
         /// <summary>
         /// initializes a new instance of the <see cref="LuceneSearchEngine"/> class.
         /// </summary>
@@ -47,28 +45,17 @@ namespace Dncy.Tools.LuceneNet
         /// <exception cref="ArgumentNullException"></exception>
         public LuceneSearchEngine(
             Analyzer analyzer,
-            IOptions<LuceneSearchEngineOptions> options, 
+            IOptions<LuceneSearchEngineOptions> options,
             IFieldSerializeProvider fieldSerializeProvider)
         {
             _options = options.Value ?? throw new ArgumentNullException(nameof(options));
             _fieldSerializeProvider = fieldSerializeProvider ?? throw new ArgumentNullException(nameof(fieldSerializeProvider));
 
             _ = _options.IndexDir ?? throw new ArgumentNullException(nameof(LuceneSearchEngineOptions.IndexDir));
-            Analyzer = analyzer??throw new ArgumentNullException(nameof(analyzer));;
+            Analyzer = analyzer ?? throw new ArgumentNullException(nameof(analyzer)); ;
             IndexDirCache.Add(_options.IndexDir);
             IndexDirectory = OpenDirectory(_options.IndexDir);
         }
-#else
-        public LuceneSearchEngine(Analyzer analyzer,LuceneSearchEngineOptions options, IFieldSerializeProvider serializeProvider)
-        {
-            _options = options ?? throw new ArgumentNullException(nameof(options));
-            _ = _options.IndexDir ?? throw new ArgumentNullException(nameof(options.IndexDir));
-            Analyzer = analyzer?? throw new ArgumentNullException(nameof(analyzer));
-            _fieldSerializeProvider = serializeProvider;
-            IndexDirCache.Add(_options.IndexDir);
-            IndexDirectory = OpenDirectory(_options.IndexDir);
-        }
-#endif
 
 
         static readonly ConcurrentDictionary<Type, Dictionary<PropertyInfo, LuceneIndexedAttribute>> TypeFieldCache = new();
@@ -231,10 +218,10 @@ namespace Dncy.Tools.LuceneNet
         /// <param name="data"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public bool UpdateByDataId<T>(string idFieldName, string dataId,T data)
+        public bool UpdateByDataId<T>(string idFieldName, string dataId, T data)
         {
             _ = idFieldName ?? throw new ArgumentNullException(nameof(idFieldName));
-            DeleteDocumentByDataId(idFieldName,dataId);
+            DeleteDocumentByDataId(idFieldName, dataId);
             var doc = ToDocument(data);
             if (IndexWriter.IsLocked(IndexDirectory))
             {
@@ -265,11 +252,11 @@ namespace Dncy.Tools.LuceneNet
             {
                 foreach (var item in datas)
                 {
-                    if (string.IsNullOrEmpty(item.IdFieldName)||string.IsNullOrEmpty(item.DataId))
+                    if (string.IsNullOrEmpty(item.IdFieldName) || string.IsNullOrEmpty(item.DataId))
                     {
                         continue;
                     }
-                    DeleteDocumentByDataId(item.IdFieldName,item.DataId);
+                    DeleteDocumentByDataId(item.IdFieldName, item.DataId);
                     var doc = ToDocument(item);
                     writer.AddDocument(doc);
                 }
@@ -291,7 +278,7 @@ namespace Dncy.Tools.LuceneNet
         {
             var size = (from strFile in IndexDirectory.ListAll() select IndexDirectory.FileLength(strFile)).Sum();
             using IndexReader reader = DirectoryReader.Open(IndexDirectory);
-            var di = new System.IO.DriveInfo(_options.IndexDir);
+            var di = new DriveInfo(_options.IndexDir);
             var model = new IndexInfo
             {
                 Dir = _options.IndexDir,
@@ -318,7 +305,7 @@ namespace Dncy.Tools.LuceneNet
             foreach (var dir in IndexDirCache)
             {
 
-                var di = new System.IO.DriveInfo(_options.IndexDir);
+                var di = new DriveInfo(_options.IndexDir);
                 var model = new IndexInfo
                 {
                     Dir = dir,
@@ -463,29 +450,29 @@ namespace Dncy.Tools.LuceneNet
         /// <param name="stopWords">自定义停止词</param>
         /// <param name="withDefaultStopWord">是否使用默认停止词</param>
         /// <returns></returns>
-        public static List<string> GetKeyWords(string searchText, bool withDefaultStopWord=false,List<string> stopWords = null)
+        public static List<string> GetKeyWords(string searchText, bool withDefaultStopWord = false, List<string> stopWords = null)
         {
             var keyworkds = new List<string>();
             CharArraySet stopwords = null;
             var arrat = new List<string>();
-            if (stopWords!=null&&stopWords.Any())
+            if (stopWords != null && stopWords.Any())
             {
-                arrat.AddRange(new CharArraySet(LuceneSearchEngine.LuceneVersion, stopWords, true).ToArray());
+                arrat.AddRange(new CharArraySet(LuceneVersion, stopWords, true).ToArray());
             }
 
             if (withDefaultStopWord)
             {
                 var defaultStop = CharArraySet.UnmodifiableSet(
-                    WordlistLoader.GetWordSet(IOUtils.GetDecodingReader(typeof(SmartChineseAnalyzer), "stopwords.txt", Encoding.UTF8), "//", LuceneSearchEngine.LuceneVersion));
+                    WordlistLoader.GetWordSet(IOUtils.GetDecodingReader(typeof(SmartChineseAnalyzer), "stopwords.txt", Encoding.UTF8), "//", LuceneVersion));
                 arrat.AddRange(defaultStop.ToArray());
             }
 
             if (arrat.Any())
             {
-                stopwords = new CharArraySet(LuceneSearchEngine.LuceneVersion, arrat, true);
+                stopwords = new CharArraySet(LuceneVersion, arrat, true);
             }
 
-            var analyzer = new SmartChineseAnalyzer(LuceneVersion.LUCENE_48,stopwords);
+            var analyzer = new SmartChineseAnalyzer(LuceneVersion.LUCENE_48, stopwords);
             using var ts = analyzer.GetTokenStream(null, searchText);
             ts.Reset();
             var ct = ts.GetAttribute<Lucene.Net.Analysis.TokenAttributes.ICharTermAttribute>();
@@ -611,7 +598,7 @@ namespace Dncy.Tools.LuceneNet
 
         private string GetHightLightPreviewStr(string value, string field, int maxNumFragments, Highlighter highlighter)
         {
-            if (highlighter==null)
+            if (highlighter == null)
             {
                 return value;
             }

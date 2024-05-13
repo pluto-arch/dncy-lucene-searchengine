@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Dncy.Tools.LuceneNet
+namespace Dotnetydd.Tools.LuceneNet
 {
-    public interface IFieldSerializeProvider:IDisposable
+    public interface IFieldSerializeProvider : IDisposable
     {
         string Serialize(object obj);
 
@@ -10,7 +10,7 @@ namespace Dncy.Tools.LuceneNet
         T? Deserialize<T>(string objStr);
 
 
-        object? Deserialize(string objStr, Type type);
+        object Deserialize(string objStr, Type type);
     }
 }
 

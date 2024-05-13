@@ -1,10 +1,10 @@
 ﻿
 using System.Collections.Generic;
 
-namespace Dncy.Tools.LuceneNet
+namespace Dotnetydd.Tools.LuceneNet.Models
 {
     public class ScoredSearchResult<T>
-        where T : class,new()
+        where T : class, new()
     {
         /// <summary>
         /// 匹配度
@@ -20,7 +20,7 @@ namespace Dncy.Tools.LuceneNet
         /// 匹配到的数据高亮后的数据
         /// key为T的属性名称，value为高亮后的数据
         /// </summary>
-        public Dictionary<string,string> HightLightValue { get; set; }
+        public Dictionary<string, string> HightLightValue { get; set; }
 
 
         public T Data { get; set; }

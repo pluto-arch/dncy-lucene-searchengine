@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Globalization;
-
 using Lucene.Net.Documents;
 
-namespace Dncy.Tools.LuceneNet
+namespace Dotnetydd.Tools.LuceneNet
 {
     public static class DocumentExtension
     {
@@ -22,7 +21,7 @@ namespace Dncy.Tools.LuceneNet
             {
                 _ when t.IsAssignableFrom(typeof(string)) => value,
                 _ when t.IsValueType => ConvertTo(value, t),
-                _ => serializeProvider.Deserialize(value,t)
+                _ => serializeProvider.Deserialize(value, t)
             };
         }
 
@@ -52,7 +51,7 @@ namespace Dncy.Tools.LuceneNet
             }
 
             return Convert.ChangeType(value, type);
-        }        
+        }
     }
 }
 

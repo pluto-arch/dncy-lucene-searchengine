@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace Dncy.Tools.LuceneNet
+namespace Dotnetydd.Tools.LuceneNet
 {
     public static class LinqExtension
     {
@@ -15,7 +15,7 @@ namespace Dncy.Tools.LuceneNet
         /// <returns>新表达式</returns>
         internal static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>> left, Expression<Func<T, bool>> right)
         {
-            return CombineLambdas(left, right, ExpressionType.AndAlso);
+            return left.CombineLambdas(right, ExpressionType.AndAlso);
         }
 
         private static Expression<Func<T, bool>> CombineLambdas<T>(this Expression<Func<T, bool>> left, Expression<Func<T, bool>> right, ExpressionType expressionType)

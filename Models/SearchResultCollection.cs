@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Dncy.Tools.LuceneNet
+namespace Dotnetydd.Tools.LuceneNet.Models
 {
     public class SearchResultCollection<T>
         where T : class, new()

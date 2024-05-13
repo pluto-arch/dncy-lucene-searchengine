@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Dncy.Tools
+namespace Dotnetydd.Tools.LuceneNet
 {
     public static partial class StringExtensions
     {
